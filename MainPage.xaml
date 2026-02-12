@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:CurrenSee.ViewModels"
+             x:Class="CurrenSee.MainPage" Shell.NavBarIsVisible="False">
+
+    <ContentPage.BindingContext>
+        <vm:MainViewModel />
+    </ContentPage.BindingContext>
+
+    <Grid RowDefinitions="Auto, *, Auto" BackgroundColor="#F0F0F0">
+
+        <Grid Grid.Row="0" BackgroundColor="#66BB6A" HeightRequest="80" Padding="20,30,20,0">
+            <Label Text="Coinverter" 
+                   HorizontalOptions="Center" 
+                   VerticalOptions="Center" 
+                   TextColor="White" 
+                   FontSize="20" FontAttributes="Bold"/>
+            <ImageButton Source="plus_icon.png" 
+                         HorizontalOptions="End" 
+                         Margin="0,0,15,0"
+                         BackgroundColor="Transparent"
+                         Command="{Binding OpenSelectionCommand}"/>
+        </Grid>
+
+        <CollectionView Grid.Row="1" ItemsSource="{Binding Currencies}" SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="0" HeightRequest="60">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}, Path=SelectItemCommand}" CommandParameter="{Binding .}"/>
+                        </Grid.GestureRecognizers>
+                        
+                        <Grid.Triggers>
+                            <DataTrigger TargetType="Grid" Binding="{Binding IsActive}" Value="True">
+                                <Setter Property="BackgroundColor" Value="#42A5F5"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="Grid" Binding="{Binding IsActive}" Value="False">
+                                <Setter Property="BackgroundColor" Value="White"/>
+                            </DataTrigger>
+                        </Grid.Triggers>
+
+                        <Grid ColumnDefinitions="Auto, Auto, *, Auto" Padding="15,0">
+                            <Label Grid.Column="0" Text="{Binding Flag}" FontSize="30" VerticalOptions="Center"/>
+                            
+                            <Label Grid.Column="1" Text="{Binding Symbol}" Margin="10,0" FontSize="18" TextColor="Gray" VerticalOptions="Center"/>
+                            
+                            <Label Grid.Column="3" Text="{Binding Amount, StringFormat='{0:F2}'}" FontSize="24" TextColor="Black" VerticalOptions="Center"/>
+                        </Grid>
+                        
+                        <BoxView HeightRequest="1" Color="#E0E0E0" VerticalOptions="End"/>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Grid Grid.Row="2" RowDefinitions="60,60,60,60" ColumnDefinitions="*,*,*" BackgroundColor="#D0D3D9" RowSpacing="1" ColumnSpacing="1">
+            
+            <Button Text="1" Grid.Row="0" Grid.Column="0" Command="{Binding PressKeyCommand}" CommandParameter="1" BackgroundColor="White" TextColor="Black" FontSize="25"/>
+            <Button Text="2" Grid.Row="0" Grid.Column="1" Command="{Binding PressKeyCommand}" CommandParameter="2" BackgroundColor="White" TextColor="Black" FontSize="25"/>
+            <Button Text="3" Grid.Row="0" Grid.Column="2" Command="{Binding PressKeyCommand}" CommandParameter="3" BackgroundColor="White" TextColor="Black" FontSize="25"/>
+
+            <Button Text="4" Grid.Row="1" Grid.Column="0" Command="{Binding PressKeyCommand}" CommandParameter="4" BackgroundColor="White" TextColor="Black" FontSize="25"/>
+            <Button Text="5" Grid.Row="1" Grid.Column="1" Command="{Binding PressKeyCommand}" CommandParameter="5" BackgroundColor="White" TextColor="Black" FontSize="25"/>
+            <Button Text="6" Grid.Row="1" Grid.Column="2" Command="{Binding PressKeyCommand}" CommandParameter="6" BackgroundColor="White" TextColor="Black" FontSize="25"/>
+
+            <Button Text="7" Grid.Row="2" Grid.Column="0" Command="{Binding PressKeyCommand}" CommandParameter="7" BackgroundColor="White" TextColor="Black" FontSize="25"/>
+            <Button Text="8" Grid.Row="2" Grid.Column="1" Command="{Binding PressKeyCommand}" CommandParameter="8" BackgroundColor="White" TextColor="Black" FontSize="25"/>
+            <Button Text="9" Grid.Row="2" Grid.Column="2" Command="{Binding PressKeyCommand}" CommandParameter="9" BackgroundColor="White" TextColor="Black" FontSize="25"/>
+
+            <Button Text="." Grid.Row="3" Grid.Column="0" Command="{Binding PressKeyCommand}" CommandParameter="." BackgroundColor="White" TextColor="Black" FontSize="25"/>
+            <Button Text="0" Grid.Row="3" Grid.Column="1" Command="{Binding PressKeyCommand}" CommandParameter="0" BackgroundColor="White" TextColor="Black" FontSize="25"/>
+            <ImageButton Grid.Row="3" Grid.Column="2" Command="{Binding PressKeyCommand}" CommandParameter="C" BackgroundColor="White" Source="backspace_icon.png" Padding="15"/>
+        </Grid>
+
+    </Grid>
+</ContentPage>
